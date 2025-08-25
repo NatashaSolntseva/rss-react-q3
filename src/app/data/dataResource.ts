@@ -44,7 +44,6 @@ export function createDataResource(url: string) {
           return data;
         });
       }
-
       throw inflight;
     },
   };

@@ -1,5 +1,7 @@
 import { Suspense } from 'react';
-import DataStatus from '@/features/DataStatus/DataStatus';
+import type { RawCountryData } from '@/app/data/co2.types';
+import { co2Resource } from '@/app/data';
+import CountriesTable from '@/widgets/CountriesTable/CountriesTable';
 
 function Fallback() {
   return (
@@ -10,6 +12,9 @@ function Fallback() {
 }
 
 export const Home = () => {
+  const data: RawCountryData = co2Resource.read();
+  const selectedYear = 2023;
+
   return (
     <div>
       <h2 className="text-2xl font-semibold mb-4">Home Page</h2>
@@ -18,7 +23,7 @@ export const Home = () => {
         explore emissions data.
       </p>
       <Suspense fallback={<Fallback />}>
-        <DataStatus />
+        <CountriesTable data={data} selectedYear={selectedYear} />
       </Suspense>
     </div>
   );
