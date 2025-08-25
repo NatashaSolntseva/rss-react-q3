@@ -4,11 +4,7 @@ type SearchBarProps = {
   placeholder?: string;
 };
 
-export default function SearchBar({
-  value,
-  onChange,
-  placeholder,
-}: SearchBarProps) {
+export const SearchBar = ({ value, onChange, placeholder }: SearchBarProps) => {
   return (
     <div className="w-full max-w-md">
       <label className="sr-only" htmlFor="country-search">
@@ -24,4 +20,4 @@ export default function SearchBar({
       />
     </div>
   );
-}
+};

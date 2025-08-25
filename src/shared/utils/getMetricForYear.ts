@@ -5,28 +5,31 @@ export function getLatestYear(entry: RawCountryEntry): number {
   return last?.year ?? NaN;
 }
 
-export function getPopulationForYear(
+export function getMetricForYear<
+  T extends keyof NonNullable<RawCountryEntry['data'][number]>,
+>(
   entry: RawCountryEntry,
-  targetYear: number
-): { year: number; population?: number } {
+  targetYear: number,
+  field: T
+): { year: number; value: number | undefined } {
   const exact = entry.data.find((r) => r.year === targetYear);
-  if (exact)
+  if (exact) {
+    const v = exact[field];
     return {
       year: exact.year,
-      population:
-        typeof exact.population === 'number' ? exact.population : undefined,
+      value: typeof v === 'number' ? (v as number) : undefined,
     };
+  }
 
   for (let i = entry.data.length - 1; i >= 0; i--) {
     const row = entry.data[i];
     if (row.year <= targetYear) {
+      const v = row[field];
       return {
         year: row.year,
-        population:
-          typeof row.population === 'number' ? row.population : undefined,
+        value: typeof v === 'number' ? (v as number) : undefined,
       };
     }
   }
-
-  return { year: targetYear, population: undefined };
+  return { year: targetYear, value: undefined };
 }
