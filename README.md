@@ -26,7 +26,7 @@ Parameters:
 | Parameter               |                   Before Optimization |                          After Optimization |
 | ----------------------- | ------------------------------------: | ------------------------------------------: |
 | **Interaction**         |               Sort by name/population |                     Sort by name/population |
-| **CD**                  |                                  1.1s |                                        1.9s |
+| **CD**                  |                                  1.1s |                                          2s |
 | **RD (CountriesTable)** |                                 279ms |                                        10ms |
 | **Interactions (why)**  |                 Every row re-rendered | Fewer redundant renders due to `React.memo` |
 | **Flamegraph**          | ![Before](docs/before-sort-flame.JPG) |         ![After](docs/after-sort-flame.JPG) |
@@ -34,36 +34,36 @@ Parameters:
 
 ### 2) Searching Countries
 
-| Parameter               |                     Before Optimization |                     After Optimization |
-| ----------------------- | --------------------------------------: | -------------------------------------: |
-| **Interaction**         |                  Typing in search input |                 Typing in search input |
-| **CD**                  |                                    1.7s |                              \_\_\_ ms |
-| **RD (CountriesTable)** |                                   256ms |                              \_\_\_ ms |
-| **Interactions (why)**  |         `setQuery` → filter → re-render |           Debounced & memoized results |
-| **Flamegraph**          | ![Before](docs/before-search-flame.JPG) |  ![After](docs/after-search-flame.JPG) |
-| **Commit info**         |  ![Before](docs/before-search-info.JPG) | ![After](docs/after-search-ranked.JPG) |
+| Parameter               |                     Before Optimization |                    After Optimization |
+| ----------------------- | --------------------------------------: | ------------------------------------: |
+| **Interaction**         |                  Typing in search input |                Typing in search input |
+| **CD**                  |                                    1.7s |                                  2.1s |
+| **RD (CountriesTable)** |                                   256ms |                                   8ms |
+| **Interactions (why)**  |         `setQuery` → filter → re-render |          Debounced & memoized results |
+| **Flamegraph**          | ![Before](docs/before-search-flame.JPG) | ![After](docs/after-search-flame.JPG) |
+| **Commit info**         |  ![Before](docs/before-search-info.JPG) |  ![After](docs/after-search-info.JPG) |
 
 ### 3) Year Selection
 
 | Parameter               |                   Before Optimization |                    After Optimization |
 | ----------------------- | ------------------------------------: | ------------------------------------: |
 | **Interaction**         |          Selecting year from dropdown |                        Selecting year |
-| **CD**                  |                                  1.9s |                             \_\_\_ ms |
-| **RD (CountriesTable)** |                                 294ms |                             \_\_\_ ms |
+| **CD**                  |                                  1.9s |                                 2.3ms |
+| **RD (CountriesTable)** |                                 294ms |                                   7ms |
 | **Interactions (why)**  |        All rows updated with new year | Faster metric lookup with memoization |
-| **Flamegraph**          | ![Before](docs/before-year-flame.JPG) |   ![After](docs/after-year-flame.png) |
-| **Commit info**         |  ![Before](docs/before-year-info.JPG) |  ![After](docs/after-year-ranked.png) |
+| **Flamegraph**          | ![Before](docs/before-year-flame.JPG) |   ![After](docs/after-year-flame.JPG) |
+| **Commit info**         |  ![Before](docs/before-year-info.JPG) |    ![After](docs/after-year-info.JPG) |
 
 ### 4) Adding / Removing Columns
 
-| Parameter               |                      Before Optimization |                      After Optimization |
-| ----------------------- | ---------------------------------------: | --------------------------------------: |
-| **Interaction**         |                     Toggle extra columns |                    Toggle extra columns |
-| **CD**                  |                                     0.9s |                               \_\_\_ ms |
-| **RD (CountriesTable)** |                                    290ms |                               \_\_\_ ms |
-| **Interactions (why)**  |          Table header + rows re-rendered |    Memoized header and selected columns |
-| **Flamegraph**          | ![Before](docs/before-columns-flame.JPG) |  ![After](docs/after-columns-flame.png) |
-| **Commit info**         |  ![Before](docs/before-columns-info.JPG) | ![After](docs/after-columns-ranked.png) |
+| Parameter               |                      Before Optimization |                     After Optimization |
+| ----------------------- | ---------------------------------------: | -------------------------------------: |
+| **Interaction**         |                     Toggle extra columns |                   Toggle extra columns |
+| **CD**                  |                                     0.9s |                                   0.6s |
+| **RD (CountriesTable)** |                                    290ms |                                    6ms |
+| **Interactions (why)**  |          Table header + rows re-rendered |   Memoized header and selected columns |
+| **Flamegraph**          | ![Before](docs/before-columns-flame.JPG) | ![After](docs/after-columns-flame.JPG) |
+| **Commit info**         |  ![Before](docs/before-columns-info.JPG) |  ![After](docs/after-columns-info.JPG) |
 
 # ✅ Applied Optimizations
 
@@ -81,7 +81,7 @@ Parameters:
 
 | Scenario    | CD Before → After | RD Before → After | Notes                     |
 | ----------- | ----------------: | ----------------: | ------------------------- |
-| Sorting     |  1.1s → \_\_\_ ms | 279ms → \_\_\_ ms | Rows memoized             |
-| Search      |  1.7s → \_\_\_ ms | 256ms → \_\_\_ ms | Debounce + memoized rows  |
-| Year Select |  1.9s → \_\_\_ ms | 294ms → \_\_\_ ms | Optimized metric lookup   |
-| Columns     |  0.9s → \_\_\_ ms | 290ms → \_\_\_ ms | Memoized header & columns |
+| Sorting     |         1.1s → 2s |      279ms → 10ms | Rows memoized             |
+| Search      |       1.7s → 2.1s |       256ms → 8ms | Debounce + memoized rows  |
+| Year Select |       1.9s → 2.3s |       294ms → 7ms | Optimized metric lookup   |
+| Columns     |       0.9s → 0.6s |       290ms → 6ms | Memoized header & columns |
