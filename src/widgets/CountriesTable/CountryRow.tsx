@@ -1,4 +1,5 @@
 import type { RawCountryEntry } from '@/app/data/co2.types';
+import { memo } from 'react';
 
 type Props = {
   country: string;
@@ -14,14 +15,14 @@ type Props = {
   ) => { year: number; value: number | undefined };
 };
 
-export const CountryRow = ({
+function CountryRowComponent({
   country,
   entry,
   selectedYear,
   selectedColumns,
   formatMetric,
   getMetricForYear,
-}: Props) => {
+}: Props) {
   const pop = getMetricForYear(entry, selectedYear, 'population');
   const co2 = getMetricForYear(entry, selectedYear, 'co2');
   const co2p = getMetricForYear(entry, selectedYear, 'co2_per_capita');
@@ -55,4 +56,6 @@ export const CountryRow = ({
       })}
     </tr>
   );
-};
+}
+
+export const CountryRow = memo(CountryRowComponent);

@@ -1,10 +1,12 @@
+import { memo } from 'react';
+
 type Props = {
   years: number[];
   value: number;
   onChange: (y: number) => void;
 };
 
-export const YearSelect = ({ years, value, onChange }: Props) => {
+function YearSelectComponent({ years, value, onChange }: Props) {
   return (
     <label className="text-sm text-gray-700 flex items-center gap-2">
       <span>Year:</span>
@@ -21,4 +23,6 @@ export const YearSelect = ({ years, value, onChange }: Props) => {
       </select>
     </label>
   );
-};
+}
+
+export const YearSelect = memo(YearSelectComponent);

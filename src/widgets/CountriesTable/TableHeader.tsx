@@ -1,8 +1,10 @@
+import { memo } from 'react';
+
 type Props = {
   selectedColumns: string[];
 };
 
-export const TableHeader = ({ selectedColumns }: Props) => {
+function TableHeaderComponent({ selectedColumns }: Props) {
   return (
     <thead className="bg-gray-100 sticky top-0">
       <tr>
@@ -20,4 +22,6 @@ export const TableHeader = ({ selectedColumns }: Props) => {
       </tr>
     </thead>
   );
-};
+}
+
+export const TableHeader = memo(TableHeaderComponent);

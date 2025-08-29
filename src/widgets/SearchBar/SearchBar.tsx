@@ -1,10 +1,12 @@
+import { memo } from 'react';
+
 type SearchBarProps = {
   value: string;
   onChange: (v: string) => void;
   placeholder?: string;
 };
 
-export const SearchBar = ({ value, onChange, placeholder }: SearchBarProps) => {
+function SearchBarComponent({ value, onChange, placeholder }: SearchBarProps) {
   return (
     <div className="w-full max-w-md">
       <label className="sr-only" htmlFor="country-search">
@@ -20,4 +22,6 @@ export const SearchBar = ({ value, onChange, placeholder }: SearchBarProps) => {
       />
     </div>
   );
-};
+}
+
+export const SearchBar = memo(SearchBarComponent);

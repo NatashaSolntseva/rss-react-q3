@@ -1,3 +1,5 @@
+import { memo } from 'react';
+
 type SortBy = 'name' | 'population';
 type SortDir = 'asc' | 'desc';
 
@@ -8,7 +10,7 @@ type Props = {
   onChange: (v: SortState) => void;
 };
 
-export const SortSelect = ({ value, onChange }: Props) => {
+function SortSelectComponent({ value, onChange }: Props) {
   return (
     <div className="flex items-center gap-2">
       <label className="text-sm text-gray-700">Sort by:</label>
@@ -35,4 +37,6 @@ export const SortSelect = ({ value, onChange }: Props) => {
       </select>
     </div>
   );
-};
+}
+
+export const SortSelect = memo(SortSelectComponent);

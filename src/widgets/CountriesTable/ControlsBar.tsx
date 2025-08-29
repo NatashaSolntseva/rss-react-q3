@@ -1,4 +1,5 @@
 import { SearchBar, SortSelect, YearSelect } from '@/widgets/';
+import { memo } from 'react';
 
 type SortState = { by: 'name' | 'population'; dir: 'asc' | 'desc' };
 
@@ -16,7 +17,7 @@ type Props = {
   onOpenColumns: () => void;
 };
 
-export const ControlsBar = ({
+function ControlsBarComponent({
   years,
   selectedYear,
   onYearChange,
@@ -25,7 +26,7 @@ export const ControlsBar = ({
   sort,
   onSortChange,
   onOpenColumns,
-}: Props) => {
+}: Props) {
   return (
     <div className="mb-4">
       <div className="flex flex-wrap items-center gap-3 mb-3">
@@ -49,4 +50,6 @@ export const ControlsBar = ({
       </div>
     </div>
   );
-};
+}
+
+export const ControlsBar = memo(ControlsBarComponent);

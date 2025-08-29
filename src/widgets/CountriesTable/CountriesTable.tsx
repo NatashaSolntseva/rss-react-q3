@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import type { RawCountryData } from '@/app/data/co2.types';
 import { co2Resource } from '@/app/data';
 
@@ -19,8 +19,8 @@ type SortState = { by: 'name' | 'population'; dir: 'asc' | 'desc' };
 export const CountriesTable = () => {
   const data: RawCountryData = co2Resource.read();
 
-  const years = getYears(data);
-  const allOptionalFields = getAvailableFields(data);
+  const years = useMemo(() => getYears(data), [data]);
+  const allOptionalFields = useMemo(() => getAvailableFields(data), [data]);
 
   const [selectedYear, setSelectedYear] = useState<number>(years[0]);
   const [query, setQuery] = useState('');
@@ -28,7 +28,19 @@ export const CountriesTable = () => {
   const [selectedColumns, setSelectedColumns] = useState<string[]>([]);
   const [isPickerOpen, setPickerOpen] = useState(false);
 
-  const rows = filterAndSortRows(data, query, sort, selectedYear);
+  const handleYearChange = useCallback((y: number) => setSelectedYear(y), []);
+  const handleQueryChange = useCallback((v: string) => setQuery(v), []);
+  const handleSortChange = useCallback((s: SortState) => setSort(s), []);
+  const closeColumns = useCallback(() => setPickerOpen(false), []);
+  const handleColumnsChange = useCallback(
+    (cols: string[]) => setSelectedColumns(cols),
+    []
+  );
+
+  const rows = useMemo(
+    () => filterAndSortRows(data, query, sort, selectedYear),
+    [data, query, sort, selectedYear]
+  );
 
   const hasResults = rows.length > 0;
 
@@ -37,11 +49,11 @@ export const CountriesTable = () => {
       <ControlsBar
         years={years}
         selectedYear={selectedYear}
-        onYearChange={setSelectedYear}
+        onYearChange={handleYearChange}
         query={query}
-        onQueryChange={setQuery}
+        onQueryChange={handleQueryChange}
         sort={sort}
-        onSortChange={setSort}
+        onSortChange={handleSortChange}
         onOpenColumns={() => setPickerOpen(true)}
       />
 
@@ -79,10 +91,10 @@ export const CountriesTable = () => {
 
       <ColumnPickerModal
         isOpen={isPickerOpen}
-        onClose={() => setPickerOpen(false)}
+        onClose={closeColumns}
         allFields={allOptionalFields}
         selected={selectedColumns}
-        onChange={setSelectedColumns}
+        onChange={handleColumnsChange}
       />
     </>
   );
