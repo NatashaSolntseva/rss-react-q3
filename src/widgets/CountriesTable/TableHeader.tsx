@@ -8,7 +8,9 @@ function TableHeaderComponent({ selectedColumns }: Props) {
   return (
     <thead className="bg-gray-100 sticky top-0">
       <tr>
-        <th className="px-4 py-2 text-left w-1/5">Country</th>
+        <th className="px-4 py-2 text-left w-1/5 sticky left-0 bg-gray-100 z-10 ">
+          Country
+        </th>
         <th className="px-4 py-2 text-left w-1/8">ISO</th>
         <th className="px-4 py-2 text-right w-1/12">Year</th>
         <th className="px-4 py-2 text-right w-1/6">Population</th>

@@ -38,8 +38,10 @@ function CountryRowComponent({
   const flashCo2p = useFlashOnChange(co2pStr, 3000);
 
   return (
-    <tr className="border-t hover:bg-gray-50">
-      <td className="px-4 py-2">{country}</td>
+    <tr className="border-t hover:bg-blue-50">
+      <td className="px-4 py-2 sticky left-0 bg-white z-10 border-r">
+        {country}
+      </td>
       <td className="px-4 py-2 text-gray-600">{entry.iso_code ?? 'N/A'}</td>
       <td className="px-4 py-2 text-right">{pop.year}</td>
 
