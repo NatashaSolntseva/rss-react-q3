@@ -30,7 +30,7 @@ Parameters:
 | **RD (CountriesTable)** |                                 279ms |                                        10ms |
 | **Interactions (why)**  |                 Every row re-rendered | Fewer redundant renders due to `React.memo` |
 | **Flamegraph**          | ![Before](docs/before-sort-flame.JPG) |         ![After](docs/after-sort-flame.JPG) |
-| **Commit info**         |  ![Before](docs/before-sort-info.JPG) |        ![After](docs/after-sort-ranked.png) |
+| **Commit info**         |  ![Before](docs/before-sort-info.JPG) |          ![After](docs/after-sort-info.JPG) |
 
 ### 2) Searching Countries
 
@@ -40,8 +40,8 @@ Parameters:
 | **CD**                  |                                    1.7s |                              \_\_\_ ms |
 | **RD (CountriesTable)** |                                   256ms |                              \_\_\_ ms |
 | **Interactions (why)**  |         `setQuery` → filter → re-render |           Debounced & memoized results |
-| **Flamegraph**          | ![Before](docs/before-search-flame.JPG) |  ![After](docs/after-search-flame.png) |
-| **Commit info**         |  ![Before](docs/before-search-info.JPG) | ![After](docs/after-search-ranked.png) |
+| **Flamegraph**          | ![Before](docs/before-search-flame.JPG) |  ![After](docs/after-search-flame.JPG) |
+| **Commit info**         |  ![Before](docs/before-search-info.JPG) | ![After](docs/after-search-ranked.JPG) |
 
 ### 3) Year Selection
 

@@ -1,4 +1,4 @@
-import type { RawCountryEntry } from '@/app/data/co2.types';
+import type { RawCountryEntry, YearlyField } from '@/app/data/co2.types';
 import { memo } from 'react';
 import { useFlashOnChange } from '@/shared/utils/useFlashOnChange';
 
@@ -6,7 +6,7 @@ type Props = {
   country: string;
   entry: RawCountryEntry;
   selectedYear: number;
-  selectedColumns: string[];
+  selectedColumns: YearlyField[];
 
   formatMetric: (val: number | undefined, digits?: number) => string;
   getMetricForYear: (
@@ -58,7 +58,7 @@ function CountryRowComponent({
       </td>
 
       {selectedColumns.map((col) => {
-        const m = getMetricForYear(entry, selectedYear, col as any);
+        const m = getMetricForYear(entry, selectedYear, col);
         return (
           <td
             key={`${country}-${col}-${selectedYear}`}

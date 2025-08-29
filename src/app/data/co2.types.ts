@@ -12,3 +12,6 @@ export type RawCountryEntry = {
 };
 
 export type RawCountryData = Record<string, RawCountryEntry>;
+
+export type YearlyData = RawCountryEntry['data'][number];
+export type YearlyField = keyof YearlyData & string;
