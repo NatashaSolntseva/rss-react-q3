@@ -15,13 +15,13 @@ export const ColumnPickerModal = ({
   selected,
   onChange,
 }: Props) => {
-  if (!isOpen) return null;
-
   const [selectedDraft, setSelectedDraft] = useState<string[]>(selected);
 
   useEffect(() => {
     if (isOpen) setSelectedDraft(selected);
   }, [isOpen, selected]);
+
+  if (!isOpen) return null;
 
   const toggle = (k: string) => {
     setSelectedDraft((prev) =>
