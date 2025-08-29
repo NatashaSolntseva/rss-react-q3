@@ -26,10 +26,10 @@ Parameters:
 | Parameter               |                   Before Optimization |                          After Optimization |
 | ----------------------- | ------------------------------------: | ------------------------------------------: |
 | **Interaction**         |               Sort by name/population |                     Sort by name/population |
-| **CD**                  |                                  1.1s |                                   \_\_\_ ms |
-| **RD (CountriesTable)** |                                 279ms |                                   \_\_\_ ms |
+| **CD**                  |                                  1.1s |                                        1.9s |
+| **RD (CountriesTable)** |                                 279ms |                                        10ms |
 | **Interactions (why)**  |                 Every row re-rendered | Fewer redundant renders due to `React.memo` |
-| **Flamegraph**          | ![Before](docs/before-sort-flame.JPG) |         ![After](docs/after-sort-flame.png) |
+| **Flamegraph**          | ![Before](docs/before-sort-flame.JPG) |         ![After](docs/after-sort-flame.JPG) |
 | **Commit info**         |  ![Before](docs/before-sort-info.JPG) |        ![After](docs/after-sort-ranked.png) |
 
 ### 2) Searching Countries

@@ -1,3 +1,5 @@
+import { useEffect, useState } from 'react';
+
 type Props = {
   isOpen: boolean;
   onClose: () => void;
@@ -15,11 +17,23 @@ export const ColumnPickerModal = ({
 }: Props) => {
   if (!isOpen) return null;
 
+  const [selectedDraft, setSelectedDraft] = useState<string[]>(selected);
+
+  useEffect(() => {
+    if (isOpen) setSelectedDraft(selected);
+  }, [isOpen, selected]);
+
   const toggle = (k: string) => {
-    if (selected.includes(k)) onChange(selected.filter((x) => x !== k));
-    else onChange([...selected, k]);
+    setSelectedDraft((prev) =>
+      prev.includes(k) ? prev.filter((x) => x !== k) : [...prev, k]
+    );
   };
 
+  const handleClear = () => setSelectedDraft([]);
+  const handleDone = () => {
+    onChange(selectedDraft);
+    onClose();
+  };
   return (
     <div className="fixed inset-0 z-50">
       <div className="absolute inset-0 bg-black/40" onClick={onClose} />
@@ -32,7 +46,7 @@ export const ColumnPickerModal = ({
           <h3 className="text-lg font-semibold">Select additional columns</h3>
           <button
             onClick={onClose}
-            className="px-2 py-1 text-gray-500 hover:text-gray-800"
+            className="px-2 py-1 text-gray-500 hover:text-gray-800 cursor-pointer"
           >
             ✕
           </button>
@@ -47,7 +61,7 @@ export const ColumnPickerModal = ({
               >
                 <input
                   type="checkbox"
-                  checked={selected.includes(key)}
+                  checked={selectedDraft.includes(key)}
                   onChange={() => toggle(key)}
                 />
                 <span className="text-sm">{key}</span>
@@ -63,14 +77,14 @@ export const ColumnPickerModal = ({
 
         <div className="p-4 border-t flex justify-end gap-2">
           <button
-            onClick={() => onChange([])}
-            className="px-3 py-2 text-sm border rounded hover:bg-gray-50"
+            onClick={handleClear}
+            className="px-3 py-2 text-sm border rounded hover:bg-gray-50 cursor-pointer"
           >
             Clear
           </button>
           <button
-            onClick={onClose}
-            className="px-3 py-2 text-sm bg-blue-600 text-white rounded hover:bg-blue-700"
+            onClick={handleDone}
+            className="px-3 py-2 text-sm bg-blue-600 text-white rounded hover:bg-blue-700 cursor-pointer"
           >
             Done
           </button>

@@ -1,6 +1,6 @@
 import type { RawCountryEntry } from '@/app/data/co2.types';
 import { memo } from 'react';
-import { useFlashOnChange } from '../../shared/utils/useFlashOnChange';
+import { useFlashOnChange } from '@/shared/utils/useFlashOnChange';
 
 type Props = {
   country: string;
@@ -30,6 +30,13 @@ function CountryRowComponent({
 
   const flash = useFlashOnChange(selectedYear);
 
+  const popStr = formatMetric(pop.value);
+  const co2Str = formatMetric(co2.value, 2);
+  const co2pStr = formatMetric(co2p.value, 3);
+  const flashPop = useFlashOnChange(popStr, 3000);
+  const flashCo2 = useFlashOnChange(co2Str, 3000);
+  const flashCo2p = useFlashOnChange(co2pStr, 3000);
+
   return (
     <tr className="border-t hover:bg-gray-50">
       <td className="px-4 py-2">{country}</td>
@@ -37,14 +44,16 @@ function CountryRowComponent({
       <td className="px-4 py-2 text-right">{pop.year}</td>
 
       <td
-        className={`px-4 py-2 text-right font-medium ${flash ? 'flash-updated' : ''}`}
+        className={`px-4 py-2 text-right font-medium ${flashPop ? 'flash-updated' : ''}`}
       >
         {formatMetric(pop.value)}
       </td>
-      <td className={`px-4 py-2 text-right ${flash ? 'flash-updated' : ''}`}>
+      <td className={`px-4 py-2 text-right ${flashCo2 ? 'flash-updated' : ''}`}>
         {formatMetric(co2.value, 2)}
       </td>
-      <td className={`px-4 py-2 text-right ${flash ? 'flash-updated' : ''}`}>
+      <td
+        className={`px-4 py-2 text-right ${flashCo2p ? 'flash-updated' : ''}`}
+      >
         {formatMetric(co2p.value, 3)}
       </td>
 
