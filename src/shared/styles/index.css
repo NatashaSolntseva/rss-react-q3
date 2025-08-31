@@ -1,0 +1,23 @@
+@import 'tailwindcss';
+
+@keyframes flash-updated {
+  0% {
+    background-color: transparent;
+  }
+  20% {
+    background-color: rgba(59, 130, 246, 0.12);
+  }
+  100% {
+    background-color: transparent;
+  }
+}
+
+.flash-updated {
+  animation: flash-updated 3s ease-in-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flash-updated {
+    animation: none;
+  }
+}
